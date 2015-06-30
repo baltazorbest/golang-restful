@@ -9,6 +9,8 @@ import (
 	"github.com/go-martini/martini"
 )
 
+const ITEM_PER_PAGE int  = 10
+
 func DB() martini.Handler {
 	sqlConnection = "go:secret@tcp(localhost:3306)/go?parseTime=true"
 
@@ -34,9 +36,10 @@ func GetItems (w http.ResponseWriter, db *gorm.DB) {
 		Items []Item
 	}
 
-	db.Find(&retData.Items)
+	db.Offset(0).Limit(ITEM_PER_PAGE).Find(&retData.Items)
 
 	w.Header().Set("Content-Type", "application/json; UTF-8")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.WriteHeader(http.StatusOK)
 
 	if err := json.NewEncoder(w).Encode(retData); err != nil {

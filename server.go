@@ -18,12 +18,13 @@ func main() {
 	m.Use(render.Renderer())
 	m.Use(DB())
 
-	m.Get("/", GetItems)
-	m.Get("/:id", GetItem)
-	m.Post("/", binding.Bind(Item{}), CreateItem)
-	m.Put("/:id", binding.Bind(Item{}), UpdateItem)
-
-	m.Delete("/:id", DeleteItem)
+	m.Group("/api/v1", func (r martini.Router) {
+		r.Get("/items/", GetItems)
+		r.Get("/item/:id", GetItem)
+		r.Post("/item/", binding.Bind(Item{}), CreateItem)
+		r.Put("/item/:id", binding.Bind(Item{}), UpdateItem)
+		r.Delete("/item/:id", DeleteItem)
+	})
 
 	m.RunOnAddr(":8888")
 
