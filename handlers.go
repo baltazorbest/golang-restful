@@ -18,6 +18,7 @@ func DB() martini.Handler {
 	}
 
 	//db.LogMode(true)
+	db.AutoMigrate(&Item{})
 
 	return func(c martini.Context) {
 		c.Map(&db)
