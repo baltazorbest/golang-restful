@@ -4,12 +4,22 @@
 	<base href="/">
 	<title>Golang RESTFul API with Angularjs</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<script src="/js/angular.min.js"></script>
 	<script src="/js/angular-route.min.js"></script>
 	<script src="/js/app.js"></script>
+	<style type="text/css">
+		.bs-example{
+			margin: 20px;
+		}
+		/* Fix alignment issue of label on extra small devices in Bootstrap 3.2 */
+		.form-horizontal .control-label{
+			padding-top: 7px;
+		}
+	</style>
 </head>
 
 <body>
@@ -18,8 +28,8 @@
 		<nav class="navbar navbar-default">
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="/">Home</a></li>
-					<li><a href="/">Add item</a></li>
+					<li class="active"><a href="/#/">Home</a></li>
+					<li><a href="/#/add">Add item</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
@@ -30,7 +40,7 @@
 	</header>
 
 	<div class="container">
-		<div class="rows">
+		<div class="row">
 			<div ng-view></div>
 		</div>
 	</div>

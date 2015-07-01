@@ -1,10 +1,17 @@
 var golangApp = angular.module('golangApp', ['ngRoute']);
 
-golangApp.config(function($routeProvider, $locationProvider) {
+golangApp.config(function($routeProvider) {
 	$routeProvider
 		.when('/', {
 			templateUrl: "partials/items.html",
 			controller: "ItemsController"
+		})
+		.when('/add', {
+			templateUrl: "partials/item-add.html"
+		})
+		.when('/edit/:itemId', {
+			templateUrl: "partials/item-edit.html",
+			controller: "ItemEditController"
 		})
 		.when('/:itemId', {
 			templateUrl: "partials/item.html",
@@ -13,12 +20,6 @@ golangApp.config(function($routeProvider, $locationProvider) {
 		.otherwise({
 			redirectTo: "/"
 		});
-	$locationProvider.html5Mode({
-		enabled: true,
-		requireBase: false
-	});
-	$locationProvider.hashPrefix('!');
-	$locationProvider.html5Mode(true);
 });
 
 golangApp.controller('ItemsController', function( $scope, $http ) {
@@ -28,8 +29,16 @@ golangApp.controller('ItemsController', function( $scope, $http ) {
 });
 
 golangApp.controller('ItemController', function( $scope, $http, $routeParams ) {
-	var itemId = $routeParams.itemId;
-	$http({'method': 'GET', url: "http://127.0.0.1:8888/api/v1/item/" + itemId }).success(function(data) {
+	$http({'method': 'GET', url: "http://127.0.0.1:8888/api/v1/item/" + $routeParams.itemId }).success(function(data) {
 		$scope.item = data.Item;
 	});
+});
+
+golangApp.controller('ItemEditController', function ( $scope, $http, $routeParams ) {
+	$http({'method': 'GET', url: "http://127.0.0.1:8888/api/v1/item/" + $routeParams.itemId }).success(function (data) {
+		$scope.item = data.Item;
+	});
+	$scope.updateItem = function (item) {
+		console.log(item);
+	};
 });

@@ -1,8 +1,11 @@
 <div class="rows">
     <div ng-repeat="item in items">
         <div class="col-sm-8 blog-main">
-            <h2 class="blog-post-title"><a href="/{{ item.id }}">{{ item.title }}</a></h2>
-            <p>Powered by: <a href="#">{{ item.user_name }}</a></p>
+            <h2 class="blog-post-title"><a href="/#/{{ item.id }}">{{ item.title }}</a></h2>
+            <p>
+                <a href="/#/edit/{{ item.id }}"><i class="fa fa-edit"></i></a>
+                Powered by: <a href="#">{{ item.user_name }}</a>
+            </p>
         </div>
     </div>
 </div>

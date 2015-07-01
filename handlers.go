@@ -62,26 +62,15 @@ func GetItem (w http.ResponseWriter, db *gorm.DB, p martini.Params) {
 	}
 }
 
-func CreateItem (w http.ResponseWriter, db *gorm.DB, i Item) {
+func CreateItem (w http.ResponseWriter, db *gorm.DB, r *http.Request, i Item) {
 	db.Save(&i)
-
-	var retData struct {
-		Item Item
-	}
-
-	db.Last(&retData.Item)
-
-	w.Header().Set("Content-Type", "application/json; UTF-8")
-	w.WriteHeader(http.StatusOK)
-
-	if err := json.NewEncoder(w).Encode(retData); err != nil {
-		panic(err.Error())
-	}
+	http.Redirect(w, r, "/", 301)
 }
 
-func UpdateItem (db *gorm.DB, p martini.Params, i Item) {
+func UpdateItem (db *gorm.DB, p martini.Params, w http.ResponseWriter, r *http.Request, i Item) {
 	var item Item
 	db.Model(&item).Where("id = ?", p["id"]).Update(&i)
+	http.Redirect(w, r, "/", 301)
 }
 
 func DeleteItem (db *gorm.DB, p martini.Params) {
