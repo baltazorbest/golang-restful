@@ -1,7 +1,4 @@
-<div ng-repeat="item in items">
-    <div class="col-sm-8 blog-main">
-        <h2 class="blog-post-title"><a href="/{{ item.id }}">{{ item.title }}</a></h2>
-        <p class="">Powered by: <a href="#">{{ item.user_name }}</a></p>
-        <p>{{ item.description }}</p>
-    </div>
-</div>
+<div class="page-header"><h1>{{ item.title }}</h1></div>
+<p>Powered by: {{ item.user_name }}</p>
+
+<p>{{ item.description }}</p>
