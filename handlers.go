@@ -62,15 +62,13 @@ func GetItem (w http.ResponseWriter, db *gorm.DB, p martini.Params) {
 	}
 }
 
-func CreateItem (w http.ResponseWriter, db *gorm.DB, r *http.Request, i Item) {
+func CreateItem (db *gorm.DB, i Item) {
 	db.Save(&i)
-	http.Redirect(w, r, "/", 301)
 }
 
-func UpdateItem (db *gorm.DB, p martini.Params, w http.ResponseWriter, r *http.Request, i Item) {
+func UpdateItem (db *gorm.DB, p martini.Params, i Item) {
 	var item Item
 	db.Model(&item).Where("id = ?", p["id"]).Update(&i)
-	http.Redirect(w, r, "/", 301)
 }
 
 func DeleteItem (db *gorm.DB, p martini.Params) {
