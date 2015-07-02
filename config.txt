@@ -1,0 +1,6 @@
+DB_USER=go
+DB_PASSWORD=secret
+DB_NAME=go
+DB_HOST=localhost
+DB_PORT=3306
+ITEM_PER_PAGE=10

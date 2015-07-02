@@ -26,13 +26,14 @@ $ go get github.com/go-martini/martini
 $ go get github.com/martini-contrib/binding
 $ go get github.com/martini-contrib/render
 $ cd golang-restful
+$ edit config.txt file if you change DB: username or password or database name
 $ go run *.go
 ```
 
 ### Todo's
 
 Write Tests
-Write delete items
+
 License
 ----
 
