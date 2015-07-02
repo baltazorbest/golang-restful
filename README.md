@@ -5,10 +5,15 @@
 
 golang-restful uses a number of open source projects to work properly:
 
-* [Go Lang] - awesome keyboard handler lib by
-* [MySQL] - database for your items.
-* [AngularJS] - HTML enhanced for web apps!
-* [Twitter Bootstrap] - great UI boilerplate for modern web apps
+* [Go Lang] - Awesome language from Google. 
+* [GORM] - Awesome ORM fro Go and mysql/postgresql/sqlite3
+* [Go Mysql] - A MySQL-Driver for Go's database/sql package
+* [GoLang Martini] - Powerful package for quickly writing modular web applications/services in Golang.
+* [Martini Binding] - Request data binding for Martini.
+* [GoLang JWT] - A go implementation of JSON Web Tokens
+* [MySQL] - Database for your items.
+* [AngularJS] - HTML enhanced for web apps.
+* [Twitter Bootstrap] - Great UI boilerplate for modern web apps.
 * [jQuery] - jQuery is a fast, small, and feature-rich JavaScript library.
 
 ### Installation
@@ -32,12 +37,14 @@ $ go run *.go
 
 ### Todo's
 
-Write Tests
+- Write Tests
+- Write Auth
 
 License
 ----
 
 Apache 2.0
+
 
 **Free Software, Hell Yeah!**
 
@@ -47,3 +54,8 @@ Apache 2.0
 [AngularJS]:http://angularjs.org
 [Go Lang]:https://golang.org/
 [MySQL]:https://www.mysql.com/
+[Go Mysql]:https://github.com/go-sql-driver/mysql
+[GoLang Martini]:https://github.com/go-martini/martini
+[GORM]:https://github.com/jinzhu/gorm
+[Martini Binding]:https://github.com/codegangsta/martini-contrib/tree/master/binding
+[GoLang JWT]:https://github.com/dgrijalva/jwt-go
