@@ -4,6 +4,7 @@
             <h2 class="blog-post-title"><a href="/#/{{ item.id }}">{{ item.title }}</a></h2>
             <p>
                 <a href="/#/edit/{{ item.id }}"><i class="fa fa-edit"></i></a>
+                <a ng-click="deleteItem(item.id)" style="cursor: pointer;"><i class="fa fa-remove"></i></a>
                 Powered by: <a href="#">{{ item.user_name }}</a>
             </p>
         </div>
