@@ -50,7 +50,7 @@ golangApp.controller('ItemCreateController', function ( $scope, $http ) {
 
 golangApp.controller('ItemEditController', function ( $scope, $http, $routeParams ) {
 	var itemId = $routeParams.itemId;
-	$scope.isNew = 0;
+	$scope.isNew = false;
 	$http({'method': 'GET', url: "/api/v1/item/" + itemId }).success(function (data) {
 		$scope.item = {"title": data.Item.title, "description": data.Item.description, "user_name": data.Item.user_name};
 	});
