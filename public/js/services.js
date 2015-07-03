@@ -4,7 +4,7 @@ var services = angular.module('golangApp.services', ['ngResource']);
 
 services.factory('ItemsFactory', function ($resource) {
     return $resource('/api/v1/items', {}, {
-        query: { method: "GET" },
+        query: { method: "GET" }
     });
 });
 
@@ -18,6 +18,6 @@ services.factory('ItemFactory', function ($resource) {
     return $resource('/api/v1/item/:id', {}, {
         show: { method: "GET" },
         update: { method: "PUT", params: {id: '@id'} },
-        delete: { method: "DELETE", params: { id: '@id' } }
+        delete: { method: "DELETE", params: {id: '@id'} }
     });
 });

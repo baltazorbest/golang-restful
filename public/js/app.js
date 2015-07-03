@@ -3,10 +3,13 @@
 var golangApp = angular.module('golangApp', [
 	'ngRoute',
 	'golangApp.controllers',
-	'golangApp.services'
+	'golangApp.services',
+	'satellizer'
 ]);
 
-golangApp.config(function($routeProvider, $httpProvider) {
+golangApp.config(function($routeProvider, $httpProvider, $authProvider) {
+	$authProvider.loginUrl = "/api/v1/auth"
+
 	$routeProvider
 		.when('/', {
 			templateUrl: "partials/items.html",
@@ -19,6 +22,14 @@ golangApp.config(function($routeProvider, $httpProvider) {
 		.when('/edit/:itemId', {
 			templateUrl: "partials/item-form.html",
 			controller: "ItemEditCtrl"
+		})
+		.when('/login', {
+			templateUrl: "partials/user-form.html",
+			controller: "LoginCtrl"
+		})
+		.when('/user', {
+			templateUrl: "partials/user-form.html",
+			controller: "UserCtrl"
 		})
 		.when('/:itemId', {
 			templateUrl: "partials/item.html",

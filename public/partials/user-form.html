@@ -1,0 +1,28 @@
+<div ng-if="isAnonymouse">
+    <h1>Login form</h1>
+    <form novalidate class="form-horizontal">
+        <div class="form-group">
+            <label for="email" class="control-label col-xs-2">Email:</label>
+            <div class="col-xs-6">
+                <input type="email" name="user_name" ng-model="user.email" id="email" placeholder="Email" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="password" class="control-label col-xs-2">Password:</label>
+            <div class="col-xs-6">
+                <input type="password" name="title" ng-model="user.password" id="password" placeholder="Password" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-offset-2 col-xs-6">
+                <button type="submit" class="btn btn-primary" ng-click="userLogin()">Login</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+<div ng-if="!isAnonymouse">
+    All ok
+</div>

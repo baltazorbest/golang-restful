@@ -9,7 +9,6 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	"github.com/go-martini/martini"
-	"fmt"
 )
 
 const (
@@ -46,7 +45,6 @@ func GetItems (w http.ResponseWriter, db *gorm.DB) {
 	db.Offset(0).Limit(Cfg["ITEM_PER_PAGE"]).Find(&retData.Items)
 
 	w.Header().Set("Content-Type", "application/json; UTF-8")
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.WriteHeader(http.StatusOK)
 
 	if err := json.NewEncoder(w).Encode(retData); err != nil {
@@ -84,6 +82,8 @@ func DeleteItem (db *gorm.DB, p martini.Params) {
 }
 
 func Login (w http.ResponseWriter, u User) {
+	var data map[string]string = make(map[string]string)
+
 	if u.Email == ValidEmail && u.Password == ValidPassword {
 		token := jwt.New(jwt.GetSigningMethod("HS256"))
 		token.Claims["useremail"] = u.Email
@@ -92,12 +92,30 @@ func Login (w http.ResponseWriter, u User) {
 		tokenString, err := token.SignedString([]byte(SecretKey))
 		if err != nil {
 			panic(err)
-			return
 		}
 
-		data := map[string]string{
-			"token": tokenString,
-		}
-		fmt.Fprint(w, data)
+		data["token"] = tokenString
+		data["status"] = "ok"
+
+	} else {
+		data["token"] = "Unautorize"
+		data["status"] = "error"
+	}
+	w.WriteHeader(http.StatusOK)
+	if err := json.NewEncoder(w).Encode(data); err != nil {
+		panic(err.Error())
+	}
+}
+
+func GetUser(w http.ResponseWriter, p martini.Params) {
+	var data map[string]string = make(map[string]string)
+
+	w.WriteHeader(http.StatusOK)
+
+		data["name"] = "baltazor"
+		data["email"] = "support@example.com"
+
+	if err := json.NewEncoder(w).Encode(data); err != nil {
+		panic(err.Error())
 	}
 }

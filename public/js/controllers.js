@@ -9,23 +9,16 @@ app.run(function ($rootScope, $templateCache) {
 });
 
 app.controller('ItemsCtrl', function( $scope, ItemsFactory, ItemFactory  ) {
-    ItemsFactory.query({}, function (responce) {
-        $scope.items = responce.Items;
-    });
+    $scope.items = ItemsFactory.query();
 
     $scope.deleteItem = function (itemId) {
         ItemFactory.delete({id: itemId});
-        ItemsFactory.query({}, function (responce) {
-            $scope.items = responce.Items;
-        });
+        $scope.items = ItemsFactory.query();
     }
 });
 
 app.controller('ItemCtrl', function( $scope, $routeParams, ItemFactory ) {
-    ItemFactory.show({id: $routeParams.itemId}, function(responce) {
-        $scope.item = responce.Item;
-    });
-
+    $scope.item = ItemFactory.show({id: $routeParams.itemId});
 });
 
 app.controller('ItemCreateCtrl', function ( $scope, ItemCreateFactory, $location ) {
@@ -40,9 +33,7 @@ app.controller('ItemEditCtrl', function ( $scope, ItemFactory, $routeParams, $lo
     $scope.isNew = false;
     var itemId = $routeParams.itemId;
 
-    ItemFactory.show({id: itemId}, function (responce) {
-        $scope.item = responce.Item;
-    });
+    $scope.item = ItemFactory.show({id: itemId});
     $scope.cancel = function () {
         $location.path('/');
     };
@@ -51,3 +42,22 @@ app.controller('ItemEditCtrl', function ( $scope, ItemFactory, $routeParams, $lo
         $location.path('/');
     };
 });
+
+app.controller('LoginCtrl', function ($scope, $auth, $location) {
+    $scope.isAnonymouse = true;
+    $scope.userLogin = function () {
+        $auth.login( $scope.user).then(function () {
+            $location.path('/');
+        });
+    };
+});
+
+app.controller('UserCtrl', function ($scope, $http, $auth) {
+    var token = $auth.getToken()
+    $scope.isAnonymouse = false;
+    $http.get('/api/v1/auth' + token).success(function (users) {
+        console.log(users)
+    }).error(function (error) {
+        console.log(error)
+    })
+})
