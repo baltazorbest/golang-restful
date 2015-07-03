@@ -6,7 +6,7 @@ app.run(function ($rootScope, $templateCache) {
     $rootScope.$on('$viewContentLoaded', function () {
         $templateCache.removeAll();
     })
-})
+});
 
 app.controller('ItemsCtrl', function( $scope, ItemsFactory, ItemFactory  ) {
     ItemsFactory.query({}, function (responce) {

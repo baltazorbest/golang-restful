@@ -13,8 +13,8 @@ import (
 )
 
 const (
-	ValidEmail = "chatovik@gmail.com"
-	ValidPassword = "123456"
+	ValidEmail = "support@example.com"
+	ValidPassword = "secret"
 	SecretKey = "WOW,MuchShibe,ToDogge"
 )
 
