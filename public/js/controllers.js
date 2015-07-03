@@ -8,10 +8,17 @@ app.run(function ($rootScope, $templateCache) {
     })
 })
 
-app.controller('ItemsCtrl', function( $scope, ItemsFactory  ) {
+app.controller('ItemsCtrl', function( $scope, ItemsFactory, ItemFactory  ) {
     ItemsFactory.query({}, function (responce) {
         $scope.items = responce.Items;
-    } )
+    });
+
+    $scope.deleteItem = function (itemId) {
+        ItemFactory.delete({id: itemId});
+        ItemsFactory.query({}, function (responce) {
+            $scope.items = responce.Items;
+        });
+    }
 });
 
 app.controller('ItemCtrl', function( $scope, $routeParams, ItemFactory ) {
