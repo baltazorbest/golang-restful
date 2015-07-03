@@ -1,14 +1,13 @@
 package main
 
 import (
-	"time"
 	"net/http"
 	"encoding/json"
 
-	"github.com/dgrijalva/jwt-go"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	"github.com/go-martini/martini"
+	"fmt"
 )
 
 const (
@@ -85,11 +84,8 @@ func Login (w http.ResponseWriter, u User) {
 	var data map[string]string = make(map[string]string)
 
 	if u.Email == ValidEmail && u.Password == ValidPassword {
-		token := jwt.New(jwt.GetSigningMethod("HS256"))
-		token.Claims["useremail"] = u.Email
 
-		token.Claims["exp"] = time.Now().Add(time.Minute * 5).Unix()
-		tokenString, err := token.SignedString([]byte(SecretKey))
+		tokenString, err := createToken(u.Email, SecretKey)
 		if err != nil {
 			panic(err)
 		}
@@ -107,13 +103,23 @@ func Login (w http.ResponseWriter, u User) {
 	}
 }
 
-func GetUser(w http.ResponseWriter, p martini.Params) {
+func GetUser(w http.ResponseWriter, p martini.Params, r *http.Request) {
 	var data map[string]string = make(map[string]string)
+
+	token := r.Header.Get("Authorization")
+
+	if err := verifyToken(token, look); err != nil {
+		data["status"] = "error"
+		fmt.Println(err)
+	} else {
+		data["status"] = "ok"
+	}
 
 	w.WriteHeader(http.StatusOK)
 
-		data["name"] = "baltazor"
-		data["email"] = "support@example.com"
+	data["name"] = "baltazor"
+	data["email"] = "support@example.com"
+
 
 	if err := json.NewEncoder(w).Encode(data); err != nil {
 		panic(err.Error())

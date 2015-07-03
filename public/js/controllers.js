@@ -2,10 +2,11 @@
 
 var app = angular.module('golangApp.controllers', []);
 
-app.run(function ($rootScope, $templateCache) {
+app.run(function ($rootScope, $templateCache, $http, $auth) {
     $rootScope.$on('$viewContentLoaded', function () {
         $templateCache.removeAll();
-    })
+    });
+    $http.defaults.headers.common['Authorization'] = $auth.getToken();
 });
 
 app.controller('ItemsCtrl', function( $scope, ItemsFactory, ItemFactory  ) {
@@ -14,7 +15,7 @@ app.controller('ItemsCtrl', function( $scope, ItemsFactory, ItemFactory  ) {
     $scope.deleteItem = function (itemId) {
         ItemFactory.delete({id: itemId});
         $scope.items = ItemsFactory.query();
-    }
+    };
 });
 
 app.controller('ItemCtrl', function( $scope, $routeParams, ItemFactory ) {
@@ -45,19 +46,18 @@ app.controller('ItemEditCtrl', function ( $scope, ItemFactory, $routeParams, $lo
 
 app.controller('LoginCtrl', function ($scope, $auth, $location) {
     $scope.isAnonymouse = true;
-    $scope.userLogin = function () {
-        $auth.login( $scope.user).then(function () {
-            $location.path('/');
+    $scope.userLogin = function (user) {
+        $auth.login(user).then(function () {
+            $location.path('/user');
         });
     };
 });
 
-app.controller('UserCtrl', function ($scope, $http, $auth) {
-    var token = $auth.getToken()
+app.controller('UserCtrl', function ($scope, $http) {
     $scope.isAnonymouse = false;
-    $http.get('/api/v1/auth' + token).success(function (users) {
-        console.log(users)
+    $http.get('/api/v1/auth').success(function (users) {
+        console.log(users);
     }).error(function (error) {
-        console.log(error)
+        console.log(error);
     })
-})
+});

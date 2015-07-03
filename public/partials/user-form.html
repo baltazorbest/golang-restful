@@ -4,20 +4,20 @@
         <div class="form-group">
             <label for="email" class="control-label col-xs-2">Email:</label>
             <div class="col-xs-6">
-                <input type="email" name="user_name" ng-model="user.email" id="email" placeholder="Email" class="form-control" />
+                <input type="email" name="email" ng-model="user.email" id="email" placeholder="Email" class="form-control" />
             </div>
         </div>
 
         <div class="form-group">
             <label for="password" class="control-label col-xs-2">Password:</label>
             <div class="col-xs-6">
-                <input type="password" name="title" ng-model="user.password" id="password" placeholder="Password" class="form-control" />
+                <input type="password" name="password" ng-model="user.password" id="password" placeholder="Password" class="form-control" />
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-xs-offset-2 col-xs-6">
-                <button type="submit" class="btn btn-primary" ng-click="userLogin()">Login</button>
+                <button type="submit" class="btn btn-primary" ng-click="userLogin(user)">Login</button>
             </div>
         </div>
 
