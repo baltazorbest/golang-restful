@@ -49,14 +49,17 @@ func main() {
 	m.Use(DB())
 
 	m.Group("/api/v1", func (r martini.Router) {
-		r.Get("/items/", GetItems)
+		r.Get("/items", GetItems)
+
 		r.Get("/item/:id", GetItem)
-		r.Post("/item/", binding.Bind(Item{}), CreateItem)
+		r.Post("/item", binding.Bind(Item{}), CreateItem)
 		r.Put("/item/:id", binding.Bind(Item{}), UpdateItem)
 		r.Delete("/item/:id", DeleteItem)
+
+		r.Post("/auth", binding.Bind(User{}), Login)
 	})
 
-	m.RunOnAddr(":8888")
+	m.RunOnAddr(":" + Cfg["PORT"])
 
 }
 

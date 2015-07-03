@@ -1,12 +1,21 @@
 package main
 
 import (
+	"time"
 	"net/http"
 	"encoding/json"
 
+	"github.com/dgrijalva/jwt-go"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	"github.com/go-martini/martini"
+	"fmt"
+)
+
+const (
+	ValidEmail = "chatovik@gmail.com"
+	ValidPassword = "123456"
+	SecretKey = "WOW,MuchShibe,ToDogge"
 )
 
 func DB() martini.Handler {
@@ -72,4 +81,23 @@ func UpdateItem (db *gorm.DB, p martini.Params, i Item) {
 func DeleteItem (db *gorm.DB, p martini.Params) {
 	var item Item
 	db.Where("id = ?", p["id"]).Delete(&item)
+}
+
+func Login (w http.ResponseWriter, u User) {
+	if u.Email == ValidEmail && u.Password == ValidPassword {
+		token := jwt.New(jwt.GetSigningMethod("HS256"))
+		token.Claims["useremail"] = u.Email
+
+		token.Claims["exp"] = time.Now().Add(time.Minute * 5).Unix()
+		tokenString, err := token.SignedString([]byte(SecretKey))
+		if err != nil {
+			panic(err)
+			return
+		}
+
+		data := map[string]string{
+			"token": tokenString,
+		}
+		fmt.Fprint(w, data)
+	}
 }
