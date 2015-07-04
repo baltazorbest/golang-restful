@@ -7,7 +7,6 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	"github.com/go-martini/martini"
-	"fmt"
 )
 
 const (
@@ -110,7 +109,6 @@ func GetUser(w http.ResponseWriter, p martini.Params, r *http.Request) {
 
 	if err := verifyToken(token, look); err != nil {
 		data["status"] = "error"
-		fmt.Println(err)
 	} else {
 		data["status"] = "ok"
 	}

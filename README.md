@@ -10,6 +10,7 @@ golang-restful uses a number of open source projects to work properly:
 * [Go Mysql] - A MySQL-Driver for Go's database/sql package
 * [GoLang Martini] - Powerful package for quickly writing modular web applications/services in Golang.
 * [Martini Binding] - Request data binding for Martini.
+* [JWT] - JSON Web Token is a compact URL-safe means of representing claims to be transferred between two parties.
 * [GoLang JWT] - A go implementation of JSON Web Tokens
 * [MySQL] - Database for your items.
 * [AngularJS] - HTML enhanced for web apps.
@@ -30,6 +31,7 @@ $ go get github.com/jinzhu/gorm
 $ go get github.com/go-martini/martini
 $ go get github.com/martini-contrib/binding
 $ go get github.com/martini-contrib/render
+$ go get github.com/dgrijalva/jwt-go
 $ cd golang-restful
 $ edit config.txt file if you change DB: username or password or database name
 $ go run *.go
@@ -38,7 +40,9 @@ $ go run *.go
 ### Todo's
 
 - Write Tests
-- Write Auth
+- Write Authentication
+- Write Registration
+- Write User profile
 
 License
 ----
@@ -59,3 +63,4 @@ Apache 2.0
 [GORM]:https://github.com/jinzhu/gorm
 [Martini Binding]:https://github.com/codegangsta/martini-contrib/tree/master/binding
 [GoLang JWT]:https://github.com/dgrijalva/jwt-go
+[JWT]:http://jwt.io

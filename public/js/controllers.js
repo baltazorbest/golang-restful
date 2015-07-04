@@ -2,11 +2,10 @@
 
 var app = angular.module('golangApp.controllers', []);
 
-app.run(function ($rootScope, $templateCache, $http, $auth) {
+app.run(function ($rootScope, $templateCache) {
     $rootScope.$on('$viewContentLoaded', function () {
         $templateCache.removeAll();
     });
-    $http.defaults.headers.common['Authorization'] = $auth.getToken();
 });
 
 app.controller('ItemsCtrl', function( $scope, ItemsFactory, ItemFactory  ) {
@@ -42,22 +41,4 @@ app.controller('ItemEditCtrl', function ( $scope, ItemFactory, $routeParams, $lo
         ItemFactory.update( $scope.item );
         $location.path('/');
     };
-});
-
-app.controller('LoginCtrl', function ($scope, $auth, $location) {
-    $scope.isAnonymouse = true;
-    $scope.userLogin = function (user) {
-        $auth.login(user).then(function () {
-            $location.path('/user');
-        });
-    };
-});
-
-app.controller('UserCtrl', function ($scope, $http) {
-    $scope.isAnonymouse = false;
-    $http.get('/api/v1/auth').success(function (users) {
-        console.log(users);
-    }).error(function (error) {
-        console.log(error);
-    })
 });

@@ -3,12 +3,13 @@
 var golangApp = angular.module('golangApp', [
 	'ngRoute',
 	'golangApp.controllers',
+	'golangApp.userControllers',
 	'golangApp.services',
 	'satellizer'
 ]);
 
 golangApp.config(function($routeProvider, $httpProvider, $authProvider) {
-	$authProvider.loginUrl = "/api/v1/auth"
+	$authProvider.loginUrl = "/api/v1/auth";
 
 	$routeProvider
 		.when('/', {

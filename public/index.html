@@ -19,7 +19,8 @@
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#/login">Login</a></li>
+					<li ng-if="!isAuthed"><a href="#/login">Login</a></li>
+					<li ng-if="isAuthed"><a ng-click="logout(); $parent.isAuthed = false;" style="cursor:pointer;">Logout</a></li>
 				</ul>
 			</div>
 		</nav>
@@ -45,6 +46,7 @@
 	<script src="/js/vendor/satellizer.min.js"></script>
 	<script src="/js/app.js"></script>
 	<script src="/js/controllers.js"></script>
+	<script src="/js/userControllers.js"></script>
 	<script src="/js/services.js"></script>
 
 </body>

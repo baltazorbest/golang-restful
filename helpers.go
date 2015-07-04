@@ -40,7 +40,6 @@ func verifyToken(myToken string, myLookupKey func(interface{}) (interface{}, err
 	myToken = strings.Replace(myToken, "Bearer ", "", -1)
 
 	token, err := jwt.Parse(myToken, func(token *jwt.Token) (interface{}, error) {
-		fmt.Println(myToken)
 		return myLookupKey(token.Header["kind"])
 	})
 
