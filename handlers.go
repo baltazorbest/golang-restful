@@ -81,10 +81,13 @@ func DeleteItem (db *gorm.DB, p martini.Params) {
 
 func Login (w http.ResponseWriter, u User) {
 	var data map[string]string = make(map[string]string)
+	var userinfo map[string]string = make(map[string]string)
 
 	if u.Email == ValidEmail && u.Password == ValidPassword {
 
-		tokenString, err := createToken(u.Email, SecretKey)
+		userinfo["email"] = ValidEmail
+		userinfo["nickname"] = "baltazor"
+		tokenString, err := createToken(userinfo, SecretKey)
 		if err != nil {
 			panic(err)
 		}
@@ -107,17 +110,18 @@ func GetUser(w http.ResponseWriter, p martini.Params, r *http.Request) {
 
 	token := r.Header.Get("Authorization")
 
-	if err := verifyToken(token, look); err != nil {
-		data["status"] = "error"
+	if len(token) < 5 {
+		data["status"] = "token is empty"
+	} else if err := verifyToken(token, look); err != nil {
+		data["status"] = "error checked token"
 	} else {
 		data["status"] = "ok"
 	}
 
-	w.WriteHeader(http.StatusOK)
-
-	data["name"] = "baltazor"
+	data["nickname"] = p["nickname"]
 	data["email"] = "support@example.com"
 
+	w.WriteHeader(http.StatusOK)
 
 	if err := json.NewEncoder(w).Encode(data); err != nil {
 		panic(err.Error())

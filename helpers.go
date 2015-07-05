@@ -19,10 +19,11 @@ func look(kind interface{}) (interface{}, error) {
 	return "", errors.New("unknown jwt kind")
 }
 
-func createToken(useremail, secret string) (string, error) {
+func createToken(userinfo map[string]string, secret string) (string, error) {
 
 	token := jwt.New(jwt.SigningMethodHS256)
-	token.Claims["useremail"] = useremail
+	token.Claims["email"] = userinfo["email"]
+	token.Claims["nickname"] = userinfo["nickname"]
 	token.Header["kind"] = "login"
 	token.Claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 	tokenString, err := token.SignedString([]byte(secret))

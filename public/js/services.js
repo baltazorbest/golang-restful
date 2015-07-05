@@ -26,6 +26,9 @@ services.factory('UserFactory', function ($auth, $window, $state) {
     return {
         parseJWT: function() {
             var token = $auth.getToken();
+            if (token == null) {
+                return false;
+            }
             var base64Url = token.split('.')[1];
             var base64 = base64Url.replace('-', '+').replace('_', '/');
             return JSON.parse($window.atob(base64));
@@ -44,4 +47,10 @@ services.factory('UserFactory', function ($auth, $window, $state) {
             $state.go('home');
         }
     };
+});
+
+services.factory('UserDetailFactory', function ($resource) {
+    return $resource('/api/v1/user/:nickname', {}, {
+        show: { method: "GET" }
+    });
 });

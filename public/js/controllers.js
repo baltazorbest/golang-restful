@@ -21,11 +21,11 @@ app.controller('ItemCtrl', function( $scope, $stateParams, ItemFactory ) {
     $scope.item = ItemFactory.show({id: $stateParams.itemId});
 });
 
-app.controller('ItemCreateCtrl', function ( $scope, ItemCreateFactory, $location ) {
+app.controller('ItemCreateCtrl', function ( $scope, ItemCreateFactory, $state ) {
     $scope.isNew = true;
     $scope.createItem = function (item) {
         ItemCreateFactory.create( item.Item );
-        $location.path('/');
+        $state.go('home');
     };
 });
 

@@ -9,33 +9,41 @@ var golangApp = angular.module('golangApp', [
 ]);
 
 golangApp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $authProvider) {
-	$authProvider.loginUrl = "/api/v1/auth";
+	$authProvider.loginUrl = "/api/v1/login";
 	$urlRouterProvider.otherwise("/");
 
 	$stateProvider
 		.state('home', {
 			url: '/',
-			templateUrl: "partials/items.html",
+			templateUrl: "partials/item/items.html",
 			controller: "ItemsCtrl"
 		})
 		.state('item-add', {
 			url: '/add',
-			templateUrl: "partials/item-form.html",
+			templateUrl: "partials/item/item-form.html",
 			controller: "ItemCreateCtrl"
 		})
 		.state('item-edit', {
 			url: '/edit/{itemId:[0-9]*}',
-			templateUrl: "partials/item-form.html",
+			templateUrl: "partials/item/item-form.html",
 			controller: "ItemEditCtrl"
 		})
 		.state('login', {
 			url: '/login',
-			templateUrl: "partials/user-form.html",
+			templateUrl: "partials/user/user-form.html",
 			controller: "LoginCtrl"
 		})
-		.state('user', {
-			url: '/user',
-			templateUrl: "partials/user-form.html",
+		.state('logout', {
+			url: '/logout',
+			controller: function($state, UserFactory, $rootScope) {
+				UserFactory.logout();
+				$rootScope.isAuthed = false;
+				$state.go('home');
+			}
+		})
+		.state('userinfo', {
+			url: '/user/{nickname:[a-zA-Z0-9]*}',
+			templateUrl: "partials/user/user-detail.html",
 			controller: "UserCtrl"
 		})
 		.state('item', {
