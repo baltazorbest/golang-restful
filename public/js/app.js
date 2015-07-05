@@ -35,8 +35,8 @@ golangApp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $au
 		})
 		.state('logout', {
 			url: '/logout',
-			controller: function($state, UserFactory, $rootScope) {
-				UserFactory.logout();
+			controller: function($state, AuthFactory, $rootScope) {
+				AuthFactory.logout();
 				$rootScope.isAuthed = false;
 				$state.go('home');
 			}

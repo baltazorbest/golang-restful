@@ -22,7 +22,7 @@ services.factory('ItemFactory', function ($resource) {
     });
 });
 
-services.factory('UserFactory', function ($auth, $window, $state) {
+services.factory('AuthFactory', function ($auth, $window, $state) {
     return {
         parseJWT: function() {
             var token = $auth.getToken();
@@ -49,7 +49,7 @@ services.factory('UserFactory', function ($auth, $window, $state) {
     };
 });
 
-services.factory('UserDetailFactory', function ($resource) {
+services.factory('UserFactory', function ($resource) {
     return $resource('/api/v1/user/:nickname', {}, {
         show: { method: "GET" }
     });

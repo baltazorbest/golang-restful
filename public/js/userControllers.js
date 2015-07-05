@@ -2,12 +2,12 @@
 
 var app = angular.module('golangApp.userControllers', ['ngResource']);
 
-app.run(function ($rootScope, $state, $http, $auth, UserFactory) {
-    $rootScope.user = UserFactory.parseJWT();
+app.run(function ($rootScope, $state, $http, $auth, AuthFactory) {
+    $rootScope.user = AuthFactory.parseJWT();
     $http.defaults.headers.common['Authorization'] = $auth.getToken();
 });
 
-app.controller('LoginCtrl', function ($scope, $auth, $state, $rootScope, UserFactory) {
+app.controller('LoginCtrl', function ($scope, $auth, $state, $rootScope) {
     $scope.userLogin = function (user) {
         $auth.login(user).then(function () {
             $rootScope.isAuthed = true;
@@ -16,6 +16,6 @@ app.controller('LoginCtrl', function ($scope, $auth, $state, $rootScope, UserFac
     };
 });
 
-app.controller('UserCtrl', function ($scope, $stateParams, UserFactory, UserDetailFactory) {
-    $scope.user = UserDetailFactory.show({ nickname: $stateParams.nickname });
+app.controller('UserCtrl', function ($scope, $stateParams, UserFactory) {
+    $scope.user = UserFactory.show({ nickname: $stateParams.nickname });
 });
