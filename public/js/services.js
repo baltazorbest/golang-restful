@@ -22,7 +22,7 @@ services.factory('ItemFactory', function ($resource) {
     });
 });
 
-services.factory('UserFactory', function ($auth, $window, $location) {
+services.factory('UserFactory', function ($auth, $window, $state) {
     return {
         parseJWT: function() {
             var token = $auth.getToken();
@@ -41,7 +41,7 @@ services.factory('UserFactory', function ($auth, $window, $location) {
         },
         logout: function() {
             $auth.removeToken();
-            $location.path("/")
+            $state.go('home');
         }
     };
 });

@@ -1,43 +1,47 @@
 'use strict';
 
 var golangApp = angular.module('golangApp', [
-	'ngRoute',
+	'ui.router',
 	'golangApp.controllers',
 	'golangApp.userControllers',
 	'golangApp.services',
 	'satellizer'
 ]);
 
-golangApp.config(function($routeProvider, $httpProvider, $authProvider) {
+golangApp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $authProvider) {
 	$authProvider.loginUrl = "/api/v1/auth";
+	$urlRouterProvider.otherwise("/");
 
-	$routeProvider
-		.when('/', {
+	$stateProvider
+		.state('home', {
+			url: '/',
 			templateUrl: "partials/items.html",
 			controller: "ItemsCtrl"
 		})
-		.when('/add', {
+		.state('item-add', {
+			url: '/add',
 			templateUrl: "partials/item-form.html",
 			controller: "ItemCreateCtrl"
 		})
-		.when('/edit/:itemId', {
+		.state('item-edit', {
+			url: '/edit/{itemId:[0-9]*}',
 			templateUrl: "partials/item-form.html",
 			controller: "ItemEditCtrl"
 		})
-		.when('/login', {
+		.state('login', {
+			url: '/login',
 			templateUrl: "partials/user-form.html",
 			controller: "LoginCtrl"
 		})
-		.when('/user', {
+		.state('user', {
+			url: '/user',
 			templateUrl: "partials/user-form.html",
 			controller: "UserCtrl"
 		})
-		.when('/:itemId', {
+		.state('item', {
+			url: '/{itemId:[0-9]*}',
 			templateUrl: "partials/item.html",
 			controller: "ItemCtrl"
-		})
-		.otherwise({
-			redirectTo: "/"
 		});
 
 	$httpProvider.defaults.useXDomain = true;

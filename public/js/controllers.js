@@ -17,28 +17,28 @@ app.controller('ItemsCtrl', function( $scope, ItemsFactory, ItemFactory  ) {
     };
 });
 
-app.controller('ItemCtrl', function( $scope, $routeParams, ItemFactory ) {
-    $scope.item = ItemFactory.show({id: $routeParams.itemId});
+app.controller('ItemCtrl', function( $scope, $stateParams, ItemFactory ) {
+    $scope.item = ItemFactory.show({id: $stateParams.itemId});
 });
 
 app.controller('ItemCreateCtrl', function ( $scope, ItemCreateFactory, $location ) {
     $scope.isNew = true;
-    $scope.createItem = function () {
-        ItemCreateFactory.create( $scope.item );
+    $scope.createItem = function (item) {
+        ItemCreateFactory.create( item.Item );
         $location.path('/');
     };
 });
 
-app.controller('ItemEditCtrl', function ( $scope, ItemFactory, $routeParams, $location ) {
+app.controller('ItemEditCtrl', function ( $scope, ItemFactory, $stateParams, $state ) {
     $scope.isNew = false;
-    var itemId = $routeParams.itemId;
+    var itemId = $stateParams.itemId;
 
     $scope.item = ItemFactory.show({id: itemId});
     $scope.cancel = function () {
-        $location.path('/');
+        $state.go('home');
     };
-    $scope.updateItem = function () {
-        ItemFactory.update( $scope.item );
-        $location.path('/');
+    $scope.updateItem = function (item) {
+        ItemFactory.update( item.Item );
+        $state.go('home');
     };
 });

@@ -24,7 +24,7 @@ func DB() martini.Handler {
 	}
 
 	//db.LogMode(true)
-	db.AutoMigrate(&Item{})
+	db.AutoMigrate(&Item{}, &User{})
 
 	return func(c martini.Context) {
 		c.Map(&db)
