@@ -32,6 +32,7 @@ $ go get github.com/go-martini/martini
 $ go get github.com/martini-contrib/binding
 $ go get github.com/martini-contrib/render
 $ go get github.com/dgrijalva/jwt-go
+$ go get code.google.com/p/go.crypto/bcrypt
 $ cd golang-restful
 $ edit config.txt file if you change DB: username or password or database name
 $ go run *.go

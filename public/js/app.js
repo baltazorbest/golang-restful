@@ -48,7 +48,7 @@ golangApp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $au
 		})
 		.state('userinfo', {
 			url: '/user/{nickname:[a-zA-Z0-9]*}',
-			templateUrl: "../partials/user/detail.html",
+			templateUrl: "partials/user/detail.html",
 			controller: "UserCtrl"
 		})
 		.state('item', {
