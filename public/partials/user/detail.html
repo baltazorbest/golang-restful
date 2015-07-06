@@ -1,0 +1,23 @@
+<div class="row" ng-if="user.user.id > 0">
+    <h1 class="page-header">{{ user.user.username }}</h1>
+
+    <div class="form-group">
+        <div class="col-xs-2">id:</div>
+        <div class="col-xs-10">{{ user.user.id }}</div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-xs-2">Name:</div>
+        <div class="col-xs-10">{{ user.user.name }}</div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-xs-2">Email:</div>
+        <div class="col-xs-10">{{ user.user.email }}</div>
+    </div>
+</div>
+<div ng-if="user.user.id == 0">
+    <div class="alert alert-danger alert-dismissable">
+        Error ! User not found.
+    </div>
+</div>

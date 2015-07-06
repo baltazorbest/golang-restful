@@ -5,3 +5,4 @@ DB_HOST=localhost
 DB_PORT=3306
 ITEM_PER_PAGE=10
 PORT=8888
+SecretKey=WOW,MuchShibe,ToDogge

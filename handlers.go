@@ -7,21 +7,19 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	"github.com/go-martini/martini"
+	"code.google.com/p/go.crypto/bcrypt"
 )
 
-const (
-	ValidEmail = "support@example.com"
-	ValidPassword = "secret"
-	SecretKey = "WOW,MuchShibe,ToDogge"
-)
+var SecretKey = Cfg["SecretKey"]
 
+/**
+Connect to Database
+**/
 func DB() martini.Handler {
 	sqlConnection = Cfg["DB_USER"] + ":" + Cfg["DB_PASSWORD"] + "@tcp(" + Cfg["DB_HOST"] + ":" + Cfg["DB_PORT"] + ")/" + Cfg["DB_NAME"] + "?parseTime=true"
 
 	db, err := gorm.Open("mysql", sqlConnection)
-	if err != nil {
-		panic(err)
-	}
+	PanicIf(err)
 
 	//db.LogMode(true)
 	db.AutoMigrate(&Item{}, &User{})
@@ -33,7 +31,9 @@ func DB() martini.Handler {
 	}
 }
 
-
+/**
+Handlers for items
+**/
 func GetItems (w http.ResponseWriter, db *gorm.DB) {
 
 	var retData struct {
@@ -79,34 +79,55 @@ func DeleteItem (db *gorm.DB, p martini.Params) {
 	db.Where("id = ?", p["id"]).Delete(&item)
 }
 
-func Login (w http.ResponseWriter, u User) {
-	var data map[string]string = make(map[string]string)
-	var userinfo map[string]string = make(map[string]string)
+/**
+Handlers for user
+**/
+func Login (w http.ResponseWriter, u User, db *gorm.DB) {
+	var (
+		data map[string]string = make(map[string]string)
+		user User
+	)
 
-	if u.Email == ValidEmail && u.Password == ValidPassword {
+	db.Find(&user, "email = ? and active = 1", u.Email)
 
-		userinfo["email"] = ValidEmail
-		userinfo["nickname"] = "baltazor"
-		tokenString, err := createToken(userinfo, SecretKey)
-		if err != nil {
-			panic(err)
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(u.Password)); err == nil {
+		userinfo := map[string]string{
+			"id": string(user.Id),
+			"email": u.Email,
+			"username": user.Username,
 		}
+		tokenString, err := createToken(userinfo, SecretKey)
+		PanicIf(err)
 
 		data["token"] = tokenString
 		data["status"] = "ok"
-
 	} else {
-		data["token"] = "Unautorize"
-		data["status"] = "error"
+		data["token"] = "unautorize"
+		data["status"] = "Error"
 	}
-	w.WriteHeader(http.StatusOK)
+
 	if err := json.NewEncoder(w).Encode(data); err != nil {
-		panic(err.Error())
+		panic(err)
 	}
+
 }
 
-func GetUser(w http.ResponseWriter, p martini.Params, r *http.Request) {
-	var data map[string]string = make(map[string]string)
+func (u *User) AfterCreate(db *gorm.DB) (err error) {
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
+	PanicIf(err)
+	db.Model(u).Update(map[string]interface{}{"password": hashedPassword, "active": 1})
+	return
+}
+
+func Signup(w http.ResponseWriter, r *http.Request, db *gorm.DB, u User) {
+	db.Save(&u)
+}
+
+func GetUser(w http.ResponseWriter, p martini.Params, r *http.Request, db *gorm.DB) {
+	var (
+		data map[string]interface{} = make(map[string]interface{})
+		user User
+	)
 
 	token := r.Header.Get("Authorization")
 
@@ -118,8 +139,9 @@ func GetUser(w http.ResponseWriter, p martini.Params, r *http.Request) {
 		data["status"] = "ok"
 	}
 
-	data["nickname"] = p["nickname"]
-	data["email"] = "support@example.com"
+	db.Select("id, username, email, name").Find(&user, "username = ?", p["username"])
+
+	data["user"] = user
 
 	w.WriteHeader(http.StatusOK)
 

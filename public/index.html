@@ -20,7 +20,7 @@
 
 				<ul class="nav navbar-nav navbar-right">
 					<li ng-if="!isAuthed"><a ui-sref="login">Login</a></li>
-					<li ng-if="isAuthed"><a ui-sref="userinfo({nickname:'{{user.nickname}}'})">{{ user.nickname }}</a></li>
+					<li ng-if="isAuthed"><a ui-sref="userinfo({nickname:'{{user.username}}'})">{{ user.username }}</a></li>
 					<li ng-if="isAuthed"><a ui-sref="logout">Logout</a></li>
 				</ul>
 			</div>

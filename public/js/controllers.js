@@ -23,6 +23,9 @@ app.controller('ItemCtrl', function( $scope, $stateParams, ItemFactory ) {
 
 app.controller('ItemCreateCtrl', function ( $scope, ItemCreateFactory, $state ) {
     $scope.isNew = true;
+    $scope.cancel = function () {
+        $state.go('home');
+    }
     $scope.createItem = function (item) {
         ItemCreateFactory.create( item.Item );
         $state.go('home');

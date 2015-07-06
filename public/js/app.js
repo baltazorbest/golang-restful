@@ -30,8 +30,13 @@ golangApp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $au
 		})
 		.state('login', {
 			url: '/login',
-			templateUrl: "partials/user/user-form.html",
+			templateUrl: "partials/user/login.html",
 			controller: "LoginCtrl"
+		})
+		.state('signup', {
+			url: '/signup',
+			templateUrl: "partials/user/signup.html",
+			controller: "SignupCtrl"
 		})
 		.state('logout', {
 			url: '/logout',
@@ -43,12 +48,12 @@ golangApp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $au
 		})
 		.state('userinfo', {
 			url: '/user/{nickname:[a-zA-Z0-9]*}',
-			templateUrl: "partials/user/user-detail.html",
+			templateUrl: "../partials/user/detail.html",
 			controller: "UserCtrl"
 		})
 		.state('item', {
 			url: '/{itemId:[0-9]*}',
-			templateUrl: "partials/item.html",
+			templateUrl: "partials/item/item.html",
 			controller: "ItemCtrl"
 		});
 
