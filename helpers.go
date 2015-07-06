@@ -5,6 +5,7 @@ import (
 	"time"
 	"errors"
 	"strings"
+
 	"github.com/dgrijalva/jwt-go"
 )
 
@@ -38,7 +39,6 @@ func createToken(userinfo map[string]string, secret string) (string, error) {
 	return tokenString, nil
 }
 
-
 func verifyToken(myToken string, myLookupKey func(interface{}) (interface{}, error)) error {
 	myToken = strings.Replace(myToken, "Bearer ", "", -1)
 	token, err := jwt.Parse(myToken, func(token *jwt.Token) (interface{}, error) {
@@ -62,4 +62,17 @@ func verifyToken(myToken string, myLookupKey func(interface{}) (interface{}, err
 		fmt.Println("Couldn't handle this token:", err)
 		return err
 	}
+}
+
+func parseJWT(myToken string, myLookupKey func(interface{}) (interface{}, error)) interface{} {
+	var a interface{}
+	myToken = strings.Replace(myToken, "Bearer ", "", -1)
+	token, err := jwt.Parse(myToken, func(token *jwt.Token) (interface{}, error) {
+		return myLookupKey(token.Header["kind"])
+	})
+	PanicIf(err)
+	if token.Valid {
+		return token.Claims
+	}
+	return a
 }

@@ -1,6 +1,6 @@
 <div class="row" ng-if="user.user.id > 0">
     <h1 class="page-header">{{ user.user.username }}</h1>
-
+    <a ng-if="accessEdit" ui-sref="useredit({username:'{{ user.user.username }}' })">edit</a>
     <div class="form-group">
         <div class="col-xs-2">id:</div>
         <div class="col-xs-10">{{ user.user.id }}</div>

@@ -1,7 +1,7 @@
 <div class="row">
-    <h1>Signup form</h1>
+    <h1 ng-if="isNew">Signup form</h1>
+    <h1 ng-if="!isNew">Update form</h1>
     <form novalidate class="form-horizontal">
-
         <div class="form-group">
             <label for="username" class="control-label col-xs-2">Username:</label>
             <div class="col-xs-6">
@@ -33,9 +33,9 @@
 
         <div class="form-group">
             <div class="col-xs-offset-2 col-xs-6">
-                <button type="submit" class="btn btn-primary" ng-click="userSignup(user);">Login</button>
+                <button type="submit" class="btn btn-primary" ng-click="userSignup(user);" ng-if="isNew">Create user</button>
+                <button type="submit" class="btn btn-primary" ng-click="userUpdate(user);" ng-if="!isNew">Update user</button>
             </div>
         </div>
-
     </form>
 </div>

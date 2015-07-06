@@ -57,8 +57,9 @@ func main() {
 		r.Delete("/item/:id", DeleteItem)
 
 		r.Post("/login", binding.Bind(User{}), Login)
-		r.Post("/signup", binding.Bind(User{}), Signup)
 		r.Get("/user/:username", GetUser)
+		r.Post("/user", binding.Bind(User{}), Signup)
+		r.Put("/user/:nickname", binding.Bind(User{}), EditUser)
 	})
 
 	m.RunOnAddr(":" + Cfg["PORT"])

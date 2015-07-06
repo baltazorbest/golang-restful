@@ -56,13 +56,14 @@ services.factory('AuthFactory', function ($auth, $window, $state, $rootScope) {
 });
 
 services.factory('UserCreateFactory', function ($resource) {
-    return $resource('/api/v1/signup', {}, {
+    return $resource('/api/v1/user', {}, {
         create: { method: "POST" }
     });
 });
 
 services.factory('UserFactory', function ($resource) {
-    return $resource('/api/v1/user/:nickname', {}, {
-        show: { method: "GET" }
+    return $resource('/api/v1/user/:username', {}, {
+        show: { method: "GET" },
+        update: { method: "PUT", params: {username: '@username'} }
     });
 });

@@ -119,6 +119,16 @@ func (u *User) AfterCreate(db *gorm.DB) (err error) {
 	return
 }
 
+func (u *User) AfterUpdate(db *gorm.DB) (err error) {
+	if u.Password == "" {
+		return
+	}
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
+	PanicIf(err)
+	db.Model(u).Update(map[string]interface{}{"password": hashedPassword})
+	return
+}
+
 func Signup(w http.ResponseWriter, r *http.Request, db *gorm.DB, u User) {
 	db.Save(&u)
 }
@@ -148,4 +158,10 @@ func GetUser(w http.ResponseWriter, p martini.Params, r *http.Request, db *gorm.
 	if err := json.NewEncoder(w).Encode(data); err != nil {
 		panic(err.Error())
 	}
+}
+
+func EditUser (db *gorm.DB, p martini.Params, u User, r *http.Request) {
+	var user User
+
+	db.Model(&user).Where("username = ?", p["username"]).Update(&u)
 }

@@ -21,11 +21,14 @@ app.controller('ItemCtrl', function( $scope, $stateParams, ItemFactory ) {
     $scope.item = ItemFactory.show({id: $stateParams.itemId});
 });
 
-app.controller('ItemCreateCtrl', function ( $scope, ItemCreateFactory, $state ) {
+app.controller('ItemCreateCtrl', function ( $scope, ItemCreateFactory, $state, AuthFactory ) {
+    if (!AuthFactory.isAuthed() ) {
+        $state.go('login');
+    }
     $scope.isNew = true;
     $scope.cancel = function () {
         $state.go('home');
-    }
+    };
     $scope.createItem = function (item) {
         ItemCreateFactory.create( item.Item );
         $state.go('home');

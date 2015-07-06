@@ -15,12 +15,27 @@ app.controller('LoginCtrl', function ($scope, $auth, $state, AuthFactory) {
 });
 
 app.controller('SignupCtrl', function ($scope, $state, UserCreateFactory) {
+    $scope.isNew = true;
     $scope.userSignup = function (user) {
         UserCreateFactory.create(user);
         $state.go('login');
     };
 });
 
-app.controller('UserCtrl', function ($scope, $stateParams, UserFactory) {
-    $scope.user = UserFactory.show({ nickname: $stateParams.nickname });
+app.controller('UserCtrl', function ($scope, $stateParams, UserFactory, AuthFactory) {
+    var userinfo = AuthFactory.parseJWT();
+    var username = $stateParams.username;
+    $scope.user = UserFactory.show({ username: username });
+    $scope.accessEdit = username == userinfo["username"];
 });
+
+app.controller('UserEditCtrl', function ($scope, UserFactory, $stateParams) {
+    $scope.isNew = false;
+    UserFactory.show({username: $stateParams.username}, function (response) {
+        $scope.user = response.user;
+    });
+    $scope.userUpdate = function (user) {
+        UserFactory.update(user);
+    }
+});
+
