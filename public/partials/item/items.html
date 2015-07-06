@@ -5,7 +5,7 @@
             <p>
                 <a ui-sref="item-edit({itemId: {{ item.id }}})"><i class="fa fa-edit"></i></a>
                 <a ng-click="deleteItem(item.id)" style="cursor: pointer;"><i class="fa fa-remove"></i></a>
-                Powered by: <a ui-sref="userinfo({ nickname:'{{ item.user_name }}' })">{{ item.user_name }}</a>
+                Powered by: <a ui-sref="userinfo({ username:'{{ item.user_name }}' })">{{ item.user_name }}</a>
             </p>
         </div>
     </div>

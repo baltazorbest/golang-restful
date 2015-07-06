@@ -119,7 +119,7 @@ func (u *User) AfterCreate(db *gorm.DB) (err error) {
 	return
 }
 
-func (u *User) AfterUpdate(db *gorm.DB) (err error) {
+/*func (u *User) AfterUpdate(db *gorm.DB) (err error) {
 	if u.Password == "" {
 		return
 	}
@@ -127,9 +127,9 @@ func (u *User) AfterUpdate(db *gorm.DB) (err error) {
 	PanicIf(err)
 	db.Model(u).Update(map[string]interface{}{"password": hashedPassword})
 	return
-}
+}*/
 
-func Signup(w http.ResponseWriter, r *http.Request, db *gorm.DB, u User) {
+func Signup(db *gorm.DB, u User) {
 	db.Save(&u)
 }
 
@@ -162,6 +162,13 @@ func GetUser(w http.ResponseWriter, p martini.Params, r *http.Request, db *gorm.
 
 func EditUser (db *gorm.DB, p martini.Params, u User, r *http.Request) {
 	var user User
-
 	db.Model(&user).Where("username = ?", p["username"]).Update(&u)
+	token := r.Header.Get("Authorization")
+	tokenData := parseJWT(token, look)
+	userinfo, _ := tokenData.(map[string]interface{})
+
+	if userinfo["username"].(string) == u.Username {
+		db.Debug().Model(&user).Where("username = ?", p["username"]).Update(&u)
+	}
+
 }
