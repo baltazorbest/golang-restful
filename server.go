@@ -59,7 +59,7 @@ func main() {
 		r.Post("/login", binding.Bind(User{}), Login)
 		r.Get("/user/:username", GetUser)
 		r.Post("/user", binding.Bind(User{}), Signup)
-		r.Put("/user/:nickname", binding.Bind(User{}), EditUser)
+		r.Put("/user/:username", binding.Bind(User{}), EditUser)
 	})
 
 	m.RunOnAddr(":" + Cfg["PORT"])

@@ -21,7 +21,7 @@ func DB() martini.Handler {
 	db, err := gorm.Open("mysql", sqlConnection)
 	PanicIf(err)
 
-	//db.LogMode(true)
+	db.LogMode(true)
 	db.AutoMigrate(&Item{}, &User{})
 
 	return func(c martini.Context) {
@@ -119,16 +119,6 @@ func (u *User) AfterCreate(db *gorm.DB) (err error) {
 	return
 }
 
-/*func (u *User) AfterUpdate(db *gorm.DB) (err error) {
-	if u.Password == "" {
-		return
-	}
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
-	PanicIf(err)
-	db.Model(u).Update(map[string]interface{}{"password": hashedPassword})
-	return
-}*/
-
 func Signup(db *gorm.DB, u User) {
 	db.Save(&u)
 }
@@ -162,13 +152,23 @@ func GetUser(w http.ResponseWriter, p martini.Params, r *http.Request, db *gorm.
 
 func EditUser (db *gorm.DB, p martini.Params, u User, r *http.Request) {
 	var user User
-	db.Model(&user).Where("username = ?", p["username"]).Update(&u)
 	token := r.Header.Get("Authorization")
 	tokenData := parseJWT(token, look)
 	userinfo, _ := tokenData.(map[string]interface{})
 
-	if userinfo["username"].(string) == u.Username {
-		db.Debug().Model(&user).Where("username = ?", p["username"]).Update(&u)
+	if userinfo["username"].(string) == string(u.Username) {
+
+		db.Model(&user).Where("username = ?", p["username"]).UpdateColumn( map[string]interface{}{
+			"username": u.Username,
+			"email": u.Email,
+			"name": u.Name,
+		})
+
+		if u.Password != "" {
+			hashedPassword, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
+			PanicIf(err)
+			db.Model(&user).Where("username = ?", p["username"]).UpdateColumn(map[string]interface{}{"password": hashedPassword})
+		}
 	}
 
 }
