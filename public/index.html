@@ -5,7 +5,7 @@
 	<title>Golang RESTFul API with Angularjs</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/public/css/style.css">
 </head>
 
 <body>
@@ -15,12 +15,12 @@
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li class="active"><a ui-sref="home">Home</a></li>
-					<li><a ui-sref="item-add">Add item</a></li>
+					<li><a ui-sref="post-add">Add post</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
 					<li ng-if="!isAuthed"><a ui-sref="login">Login</a></li>
-					<li ng-if="isAuthed"><a ui-sref="userinfo({username:'{{user.username}}'})">{{ user.username }}</a></li>
+					<li ng-if="isAuthed"><a ui-sref="userinfo({login:'{{user.login}}'})">{{ user.login }}</a></li>
 					<li ng-if="isAuthed"><a ui-sref="logout">Logout</a></li>
 				</ul>
 			</div>
@@ -41,14 +41,14 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-	<script src="/js/vendor/angular.min.js"></script>
-	<script src="/js/vendor/angular-resource.min.js"></script>
-	<script src="/js/vendor/angular-ui-route.min.js"></script>
-	<script src="/js/vendor/satellizer.min.js"></script>
-	<script src="/js/app.js"></script>
-	<script src="/js/controllers.js"></script>
-	<script src="/js/userControllers.js"></script>
-	<script src="/js/services.js"></script>
+	<script src="/public/js/vendor/angular.min.js"></script>
+	<script src="/public/js/vendor/angular-resource.min.js"></script>
+	<script src="/public/js/vendor/angular-ui-route.min.js"></script>
+	<script src="/public/js/vendor/satellizer.min.js"></script>
+	<script src="/public/js/app.js"></script>
+	<script src="/public/js/controllers.js"></script>
+	<script src="/public/js/userControllers.js"></script>
+	<script src="/public/js/services.js"></script>
 
 </body>
 </html>

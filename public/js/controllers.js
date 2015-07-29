@@ -8,20 +8,21 @@ app.run(function ($rootScope, $templateCache) {
     });
 });
 
-app.controller('ItemsCtrl', function( $scope, ItemsFactory, ItemFactory  ) {
-    $scope.items = ItemsFactory.query();
+app.controller('PostsCtrl', function( $scope, PostsFactory, PostFactory  ) {
+    $scope.posts = PostsFactory.query();
 
-    $scope.deleteItem = function (itemId) {
-        ItemFactory.delete({id: itemId});
-        $scope.items = ItemsFactory.query();
+    $scope.deletePost = function (postId) {
+        PostFactory.delete({id: postId});
+        $scope.posts = PostsFactory.query();
     };
 });
 
-app.controller('ItemCtrl', function( $scope, $stateParams, ItemFactory ) {
-    $scope.item = ItemFactory.show({id: $stateParams.itemId});
+app.controller('PostCtrl', function( $scope, $stateParams, PostFactory ) {
+    $scope.post = PostFactory.show({id: $stateParams.postId});
+
 });
 
-app.controller('ItemCreateCtrl', function ( $scope, ItemCreateFactory, $state, AuthFactory ) {
+app.controller('PostCreateCtrl', function ( $scope, PostCreateFactory, $state, AuthFactory ) {
     if (!AuthFactory.isAuthed() ) {
         $state.go('login');
     }
@@ -29,22 +30,22 @@ app.controller('ItemCreateCtrl', function ( $scope, ItemCreateFactory, $state, A
     $scope.cancel = function () {
         $state.go('home');
     };
-    $scope.createItem = function (item) {
-        ItemCreateFactory.create( item.Item );
+    $scope.createPost = function (post) {
+        PostCreateFactory.create( post.Post );
         $state.go('home');
     };
 });
 
-app.controller('ItemEditCtrl', function ( $scope, ItemFactory, $stateParams, $state ) {
+app.controller('PostEditCtrl', function ( $scope, PostFactory, $stateParams, $state ) {
     $scope.isNew = false;
-    var itemId = $stateParams.itemId;
+    var postId = $stateParams.postId;
 
-    $scope.item = ItemFactory.show({id: itemId});
+    $scope.post = PostFactory.show({id: postId});
     $scope.cancel = function () {
         $state.go('home');
     };
-    $scope.updateItem = function (item) {
-        ItemFactory.update( item.Item );
+    $scope.updatePost = function (post) {
+        PostFactory.update( post );
         $state.go('home');
     };
 });

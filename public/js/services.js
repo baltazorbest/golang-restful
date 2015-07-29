@@ -2,23 +2,38 @@
 
 var services = angular.module('golangApp.services', ['ngResource']);
 
-services.factory('ItemsFactory', function ($resource) {
-    return $resource('/api/v1/items', {}, {
-        query: { method: "GET" }
+services.factory('PostsFactory', function ($resource) {
+    return $resource('/api/v1/posts', {}, {
+        query: {
+            method: "GET",
+            isArray: true,
+            header: "Content-type: application/json"
+        }
     });
 });
 
-services.factory('ItemCreateFactory', function ($resource) {
-    return $resource('/api/v1/item', {}, {
-        create: { method: "POST" }
+services.factory('PostCreateFactory', function ($resource) {
+    return $resource('/api/v1/post', {}, {
+        create: {
+            method: "POST",
+            header: "Content-type: application/json"
+        }
     });
 });
 
-services.factory('ItemFactory', function ($resource) {
-    return $resource('/api/v1/item/:id', {}, {
+services.factory('PostFactory', function ($resource) {
+    return $resource('/api/v1/post/:id', {}, {
         show: { method: "GET" },
-        update: { method: "PUT", params: {id: '@id'} },
-        delete: { method: "DELETE", params: {id: '@id'} }
+        update: {
+            method: "PUT",
+            params: {id: '@id'},
+            header: "Content-type: application/json"
+        },
+        delete: {
+            method: "DELETE",
+            params: {id: '@id'},
+            header: "Content-type: application/json"
+        }
     });
 });
 
@@ -62,8 +77,8 @@ services.factory('UserCreateFactory', function ($resource) {
 });
 
 services.factory('UserFactory', function ($resource) {
-    return $resource('/api/v1/user/:username', {}, {
+    return $resource('/api/v1/user/:login', {}, {
         show: { method: "GET" },
-        update: { method: "PUT", params: {username: '@username'} }
+        update: { method: "PUT", params: {login: '@login'} }
     });
 });

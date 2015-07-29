@@ -75,7 +75,7 @@ func (u *userResource) GetUser(c *gin.Context) {
 
 	var user User
 
-	if u.db.Find(&user, "login = ?", login).RecordNotFound() {
+	if u.db.Select("id, login, name, email, created").Find(&user, "login = ? and status = 1", login).RecordNotFound() {
 		c.JSON(404, NewError("user not found"))
 		return
 	} else {

@@ -1,0 +1,36 @@
+<div class="bs-example">
+    <h1 ng-if="isNew">Create Post</h1>
+    <h1 ng-if="!isNew">Update Post</h1>
+
+    <form novalidate class="form-horizontal">
+
+        <div class="form-group">
+            <label for="title" class="control-label col-xs-2">Title:</label>
+            <div class="col-xs-10">
+                <input name="title" ng-model="post.title" id="title" placeholder="Title" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="description" class="control-label col-xs-2">Description:</label>
+            <div class="col-xs-10">
+                <textarea name="description" ng-model="post.description" id="description" placeholder="Description" class="form-control" rows="3"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="author_id" class="control-label col-xs-2">Author ID:</label>
+            <div class="col-xs-10">
+                <input name="author_id" ng-model="post.author_id" id="author_id" placeholder="Author ID" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-offset-2 col-xs-10">
+                <a ng-click="cancel()" class="btn btn-danger">Cancel</a>
+                <button type="submit" class="btn btn-primary" ng-if="isNew" ng-click="createPost(post)">Create post</button>
+                <button type="submit" class="btn btn-primary" ng-if="!isNew" ng-click="updatePost(post)">Update post</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -9,28 +9,28 @@ var golangApp = angular.module('golangApp', [
 ]);
 
 golangApp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $authProvider) {
-	$authProvider.loginUrl = "/api/v1/login";
+	$authProvider.loginUrl = "/api/v1/user/login";
 	$urlRouterProvider.otherwise("/");
 
 	$stateProvider
 		.state('home', {
 			url: '/',
-			templateUrl: "partials/item/items.html",
-			controller: "ItemsCtrl"
+			templateUrl: "public/partials/post/posts.html",
+			controller: "PostsCtrl"
 		})
-		.state('item-add', {
+		.state('post-add', {
 			url: '/add',
-			templateUrl: "partials/item/item-form.html",
-			controller: "ItemCreateCtrl"
+			templateUrl: "public/partials/post/post-form.html",
+			controller: "PostCreateCtrl"
 		})
-		.state('item-edit', {
-			url: '/edit/{itemId:[0-9]*}',
-			templateUrl: "partials/item/item-form.html",
-			controller: "ItemEditCtrl"
+		.state('post-edit', {
+			url: '/edit/{postId:[0-9]*}',
+			templateUrl: "public/partials/post/post-form.html",
+			controller: "PostEditCtrl"
 		})
 		.state('login', {
 			url: '/login',
-			templateUrl: "partials/user/login.html",
+			templateUrl: "public/partials/user/login.html",
 			controller: "LoginCtrl"
 		})
 		.state('logout', {
@@ -43,23 +43,23 @@ golangApp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $au
 		})
 		.state('signup', {
 			url: '/signup',
-			templateUrl: "partials/user/form.html",
-			controller: "SignupCtrl"
+			templateUrl: "public/partials/user/form.html",
+			controller: "UserCreateCtrl"
 		})
 		.state('userinfo', {
-			url: '/user/{username:[a-zA-Z0-9]*}',
-			templateUrl: "partials/user/detail.html",
-			controller: "UserCtrl"
+			url: '/user/{login:[a-zA-Z0-9]*}',
+			templateUrl: "public/partials/user/detail.html",
+			controller: "UserDetailCtrl"
 		})
 		.state('useredit', {
-			url: '/user/edit/{username:[a-zA-Z0-9]*}',
-			templateUrl: "partials/user/form.html",
+			url: '/user/edit/{login:[a-zA-Z0-9]*}',
+			templateUrl: "public/partials/user/form.html",
 			controller: "UserEditCtrl"
 		})
-		.state('item', {
-			url: '/{itemId:[0-9]*}',
-			templateUrl: "partials/item/item.html",
-			controller: "ItemCtrl"
+		.state('post', {
+			url: '/{postId:[0-9]*}',
+			templateUrl: "public/partials/post/post.html",
+			controller: "PostCtrl"
 		});
 
 	$httpProvider.defaults.useXDomain = true;

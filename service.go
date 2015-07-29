@@ -16,7 +16,7 @@ func (s *BlogService) Run() {
 	db, err := gorm.Open("mysql", sqlConnection)
 	PanicIf(err)
 
-	db.LogMode(true)
+	//db.LogMode(true)
 	db.AutoMigrate(&Post{}, &User{})
 
 	postResource := postResource{db: db}
@@ -37,6 +37,9 @@ func (s *BlogService) Run() {
 		apiv1.POST("/user", userResource.CreateUser)
 		apiv1.PUT("/user/:login", userResource.UpdateUser)
 	}
+
+	r.StaticFile("/", "./public/index.html")
+	r.Static("/public/", "./public/")
 
 	r.Run(":" + Cfg["PORT"])
 

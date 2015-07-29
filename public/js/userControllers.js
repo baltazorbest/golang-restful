@@ -14,7 +14,7 @@ app.controller('LoginCtrl', function ($scope, $auth, $state, AuthFactory) {
     };
 });
 
-app.controller('SignupCtrl', function ($scope, $state, UserCreateFactory) {
+app.controller('UserCreateCtrl', function ($scope, $state, UserCreateFactory) {
     $scope.isNew = true;
     $scope.userSignup = function (user) {
         UserCreateFactory.create(user);
@@ -22,18 +22,16 @@ app.controller('SignupCtrl', function ($scope, $state, UserCreateFactory) {
     };
 });
 
-app.controller('UserCtrl', function ($scope, $stateParams, UserFactory, AuthFactory) {
+app.controller('UserDetailCtrl', function ($scope, $stateParams, UserFactory, AuthFactory) {
     var userinfo = AuthFactory.parseJWT();
-    var username = $stateParams.username;
-    $scope.user = UserFactory.show({ username: username });
-    $scope.accessEdit = username == userinfo["username"];
+    var login = $stateParams.login;
+    $scope.user = UserFactory.show({ login: login });
+    $scope.accessEdit = login == userinfo["login"];
 });
 
 app.controller('UserEditCtrl', function ($scope, UserFactory, $stateParams) {
     $scope.isNew = false;
-    UserFactory.show({username: $stateParams.username}, function (response) {
-        $scope.user = response.user;
-    });
+    $scope.user = UserFactory.show({login: $stateParams.login});
     $scope.userUpdate = function (user) {
         UserFactory.update(user);
     }
