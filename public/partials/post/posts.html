@@ -5,7 +5,8 @@
             <p>
                 <a ui-sref="post-edit({postId: {{ post.id }}})"><i class="fa fa-edit"></i></a>
                 <a ng-click="deletePost(post.id)" style="cursor: pointer;"><i class="fa fa-remove"></i></a>
-                Powered by: <a ui-sref="userinfo({ login:'{{ post.login }}' })">{{ post.author_id }}</a>
+                Powered by: <a ui-sref="userinfo({ login:'{{ post.login }}' })">{{ post.login }}</a>
+                at {{ post.created | date:'yyyy-MM-dd HH:mm' }}
             </p>
         </div>
     </div>

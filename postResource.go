@@ -12,22 +12,20 @@ type postResource struct {
 }
 
 func (p *postResource) GetPosts(c *gin.Context) {
-	var posts []Post
-
-	p.db.Offset(0).Limit(Cfg["ITEM_PER_PAGE"]).Find(&posts)
-
+	var posts []PostResult
+	p.db.Table("posts").Select("posts.*, users.login, users.name, users.email").Joins("join users on users.id = posts.author_id").Find(&posts)
 	c.JSON(200, posts)
 }
 
 func (p *postResource) GetPost(c *gin.Context) {
-	var post Post
+	var post PostResult
 	id, err := p.getId(c)
 	if err != nil {
 		c.JSON(400, NewError("problem decoding id"))
 		return
 	}
 
-	if p.db.First(&post, id).RecordNotFound() {
+	if p.db.Table("posts").Select("posts.*, users.login, users.name, users.email").Joins("join users on users.id = posts.author_id").Find(&post, "posts.id = ?", id).RecordNotFound() {
 		c.JSON(404, NewError("Record not found"))
 	} else {
 		c.JSON(200, post)

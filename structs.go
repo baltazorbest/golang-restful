@@ -27,3 +27,14 @@ type User struct {
 type Error struct {
 	Error string `json:"error"`
 }
+
+type PostResult struct {
+	Id          int32     `json:"id"`
+	Title       string    `json:"title"`
+	Description string    `json:"description"`
+	Created     time.Time `json:"created"`
+	AuthorID    string    `json:"author_id"`
+    Name        string    `json:"name"`
+    Login       string    `json:"login"`
+    Email       string    `json:"email"`
+}

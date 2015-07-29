@@ -1,4 +1,7 @@
 <div class="page-header"><h1>{{ post.title }}</h1></div>
-<p>Powered by: {{ post.author_id }}</p>
+<p>
+    Powered by: {{ post.login }}
+    at {{ post.created | date:'yyyy-MM-dd HH:mm' }}
+</p>
 
 <p>{{ post.description }}</p>
