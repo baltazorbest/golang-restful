@@ -1,8 +1,11 @@
 package main
 
 import (
+	"os"
 	"fmt"
+	"log"
 	"time"
+	"bufio"
 	"errors"
 	"strings"
 
@@ -13,6 +16,28 @@ func PanicIf(err error) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func ReadFile (filename string) map[string]string {
+	conf := make(map[string]string)
+
+	file, err := os.Open(filename)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+
+	for scanner.Scan() {
+		line := strings.Split(scanner.Text(), "=")
+		conf[line[0]] = line[1]
+	}
+	if err := scanner.Err(); err != nil {
+		log.Fatal(err)
+	}
+
+	return conf
 }
 
 func look(kind interface{}) (interface{}, error) {
@@ -29,7 +54,7 @@ func createToken(userinfo map[string]string, secret string) (string, error) {
 	token := jwt.New(jwt.SigningMethodHS256)
 	token.Claims["id"] = userinfo["id"]
 	token.Claims["email"] = userinfo["email"]
-	token.Claims["username"] = userinfo["username"]
+	token.Claims["login"] = userinfo["login"]
 	token.Header["kind"] = "login"
 	token.Claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 	tokenString, err := token.SignedString([]byte(secret))
@@ -75,4 +100,8 @@ func parseJWT(myToken string, myLookupKey func(interface{}) (interface{}, error)
 		return token.Claims
 	}
 	return a
+}
+
+func NewError(msg string) *Error {
+	return &Error{Error: msg}
 }

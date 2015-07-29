@@ -1,5 +1,5 @@
 ### Version
-0.1
+0.2.0
 
 ### Tech
 
@@ -8,8 +8,7 @@ golang-restful uses a number of open source projects to work properly:
 * [Go Lang] - Awesome language from Google. 
 * [GORM] - Awesome ORM fro Go and mysql/postgresql/sqlite3
 * [Go Mysql] - A MySQL-Driver for Go's database/sql package
-* [GoLang Martini] - Powerful package for quickly writing modular web applications/services in Golang.
-* [Martini Binding] - Request data binding for Martini.
+* [GoLang Gin] - Gin is a web framework written in Golang.
 * [JWT] - JSON Web Token is a compact URL-safe means of representing claims to be transferred between two parties.
 * [GoLang JWT] - A go implementation of JSON Web Tokens
 * [MySQL] - Database for your items.
@@ -26,14 +25,8 @@ $ create database `go` character set utf8 collate utf8_general_ci; - you can cha
 $ grant all privileges on `go`.* to 'go'@'localhost'; - if you change username or database name, you need change here
 $ cd $GOPATH
 $ git clone [git-repo-url] golang-restful
-$ go get github.com/go-sql-driver/mysql
-$ go get github.com/jinzhu/gorm
-$ go get github.com/go-martini/martini
-$ go get github.com/martini-contrib/binding
-$ go get github.com/martini-contrib/render
-$ go get github.com/dgrijalva/jwt-go
-$ go get code.google.com/p/go.crypto/bcrypt
 $ cd golang-restful
+$ go get
 $ edit config.txt file if you change DB: username or password or database name
 $ go run *.go
 ```
@@ -60,8 +53,7 @@ Apache 2.0
 [Go Lang]:https://golang.org/
 [MySQL]:https://www.mysql.com/
 [Go Mysql]:https://github.com/go-sql-driver/mysql
-[GoLang Martini]:https://github.com/go-martini/martini
+[GoLang Gin]:https://github.com/gin-gonic/gin
 [GORM]:https://github.com/jinzhu/gorm
-[Martini Binding]:https://github.com/codegangsta/martini-contrib/tree/master/binding
 [GoLang JWT]:https://github.com/dgrijalva/jwt-go
 [JWT]:http://jwt.io

@@ -1,17 +1,29 @@
 package main
 
-type Item struct {
-	Id          int64  `json:"id"`
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	UserName    string `json:"user_name"`
+import (
+	"time"
+)
+
+
+type Post struct {
+	Id          int32     `json:"id"`
+	Title       string    `json:"title"`
+	Description string    `json:"description"`
+	Created     time.Time `json:"created"`
+	Status      uint8     `json:"-"`
+	AuthorID    string    `json:"author_id"`
 }
 
 type User struct {
-	Id       int64  `json:"id"`
-	Username string `json:"username"`
-	Name     string `json:"name"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
-	Active   uint8  `json:"-"`
+	Id       int64     `json:"id"`
+	Name     string    `json:"name"`
+	Login    string    `json:"login"`
+	Email    string    `json:"email"`
+	Password string    `json:"password"`
+	Created  time.Time `json:"created"`
+	Status   uint8     `json:"-"`
+}
+
+type Error struct {
+	Error string `json:"error"`
 }
