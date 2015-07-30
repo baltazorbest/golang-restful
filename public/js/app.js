@@ -3,6 +3,7 @@
 var golangApp = angular.module('golangApp', [
 	'ui.router',
 	'golangApp.controllers',
+	'golangApp.postControllers',
 	'golangApp.userControllers',
 	'golangApp.services',
 	'satellizer'

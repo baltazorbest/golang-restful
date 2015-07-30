@@ -19,13 +19,6 @@
         </div>
 
         <div class="form-group">
-            <label for="author_id" class="control-label col-xs-2">Author ID:</label>
-            <div class="col-xs-10">
-                <input name="author_id" ng-model="post.author_id" id="author_id" placeholder="Author ID" class="form-control" />
-            </div>
-        </div>
-
-        <div class="form-group">
             <div class="col-xs-offset-2 col-xs-10">
                 <a ng-click="cancel()" class="btn btn-danger">Cancel</a>
                 <button type="submit" class="btn btn-primary" ng-if="isNew" ng-click="createPost(post)">Create post</button>

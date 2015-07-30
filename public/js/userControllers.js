@@ -29,11 +29,20 @@ app.controller('UserDetailCtrl', function ($scope, $stateParams, UserFactory, Au
     $scope.accessEdit = login == userinfo["login"];
 });
 
-app.controller('UserEditCtrl', function ($scope, UserFactory, $stateParams) {
+app.controller('UserEditCtrl', function ($scope, $state, UserFactory, AuthFactory, $stateParams) {
+    var userinfo = AuthFactory.parseJWT();
+    var login = $stateParams.login;
     $scope.isNew = false;
+    if (login != userinfo["login"]) {
+        $state.go('login');
+        return false;
+    }
+
     $scope.user = UserFactory.show({login: $stateParams.login});
     $scope.userUpdate = function (user) {
         UserFactory.update(user);
     }
+
+
 });
 
