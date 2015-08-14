@@ -21,7 +21,7 @@ func PanicIf(err error) {
 func ReadFile (filename string) map[string]string {
 	conf := make(map[string]string)
 
-	file, err := os.Open(filename)
+	file, err := os.Open(PATH + filename)
 	if err != nil {
 		log.Fatal(err)
 	}

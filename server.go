@@ -1,6 +1,7 @@
 package main
 
 const (
+	PATH = "/go/bin/"
 	CONFIG_FILE  = "config.txt"
 )
 
