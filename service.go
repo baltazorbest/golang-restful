@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	"github.com/gin-gonic/gin"
@@ -41,5 +42,6 @@ func (s *BlogService) Run() {
 	r.StaticFile("/", "./public/index.html")
 	r.Static("/public/", "./public/")
 
+	fmt.Println("Testing")
 	r.Run(":" + Cfg["PORT"])
 }
