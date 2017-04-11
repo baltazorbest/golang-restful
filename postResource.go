@@ -8,7 +8,7 @@ import (
 )
 
 type postResource struct {
-	db gorm.DB
+	db *gorm.DB
 }
 
 func (p *postResource) GetPosts(c *gin.Context) {

@@ -6,11 +6,11 @@ import (
 	"strconv"
 	"github.com/jinzhu/gorm"
 	"github.com/gin-gonic/gin"
-	"code.google.com/p/go.crypto/bcrypt"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type userResource struct {
-	db gorm.DB
+	db *gorm.DB
 }
 
 func (u *userResource) Login(c *gin.Context) {

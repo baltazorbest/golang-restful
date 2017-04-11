@@ -51,13 +51,15 @@ func look(kind interface{}) (interface{}, error) {
 }
 
 func createToken(userinfo map[string]string, secret string) (string, error) {
-	token := jwt.New(jwt.SigningMethodHS256)
-	token.Claims["id"] = userinfo["id"]
-	token.Claims["email"] = userinfo["email"]
-	token.Claims["login"] = userinfo["login"]
-	token.Header["kind"] = "login"
-	token.Claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
-	tokenString, err := token.SignedString([]byte(secret))
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+	    "id": userinfo["id"],
+	    "email": userinfo["email"],
+	    "login": userinfo["login"],
+	    "kind": "login",
+	    "exp": time.Now().Add(time.Hour * 72).Unix(),
+	})
+	tokenString, err := token.SignedString(secret)
+
 	if err != nil {
 		return "", err
 	}
